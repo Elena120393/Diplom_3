@@ -35,3 +35,8 @@ class AccountPageLocators:
 
     # Локатор активного раздела
     ACTIVE_SECTION = (By.XPATH, "//div[contains(@class, 'Account_link_active__')]")
+
+    # Локатор для секции истории заказов
+    ORDER_STATUS = (By.XPATH, "//*[text()='Выполнен']")  # Статус заказа
+    ORDER_HISTORY_SECTION = (By.XPATH, "//div[contains(text(), 'История заказов')]")  # Заголовок раздела
+

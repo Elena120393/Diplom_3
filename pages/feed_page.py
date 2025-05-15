@@ -87,11 +87,6 @@ class FeedPage(BasePage):
     def wait_for_element_visible(self, locator, timeout=10):
         return self.wait_for_visibility(locator, timeout=timeout)
 
-    @allure.step("Проверить наличие заказа в ленте по номеру")
-    def click_first_order(self):
-        elem = self.wait_for_clickable(FeedPageLocators.FIRST_ORDER_IN_LIST)
-        self.driver.execute_script("arguments[0].click();", elem)
-        return self
 
     @allure.step("Открыть страницу ленты заказов")
     def open(self):
@@ -171,3 +166,7 @@ class FeedPage(BasePage):
             if str(order_number) == order_num_text:
                 return True
         return False
+
+    @allure.step("Проверить открытие страницы ленты заказов")
+    def is_feed_page_opened(self):
+        return self.wait_for_url_contains("/feed")

@@ -1,6 +1,4 @@
 
-
-import pytest
 import allure
 from pages.login_page import LoginPage
 from pages.account_page import AccountPage
@@ -17,6 +15,7 @@ class TestAccount:
         account_page = login_page.click_account_button()
         assert account_page.is_profile_opened(), "Страница профиля не открылась"
 
+    @allure.title('Проверка истории заказов')
     @allure.title('Проверка истории заказов')
     def test_order_history(self, driver):
         login_page = LoginPage(driver)
@@ -38,7 +37,7 @@ class TestAccount:
             account_page.navigate_to_order_history()
 
         with allure.step("Проверить переход в раздел истории заказов"):
-            assert "account/order-history" in driver.current_url, "Не перешли в историю заказов"
+            assert account_page.is_order_history_page_opened(), "Не перешли в историю заказов"
             assert account_page.has_order_history(), "История заказов не отображается"
 
     @allure.title('Выход из аккаунта')
@@ -51,4 +50,3 @@ class TestAccount:
 
         with allure.step("Проверить переход на страницу входа"):
             assert login_page.is_login_page_opened(), "Выход не выполнен"
-

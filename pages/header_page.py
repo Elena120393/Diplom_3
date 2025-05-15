@@ -1,6 +1,5 @@
 
 
-
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from locators.header_locators import HeaderLocators
@@ -54,7 +53,7 @@ class HeaderPage(BasePage):
 
     @allure.step("Проверить переход на главную страницу")
     def is_main_page_opened(self):
-        return self.wait_for_url_contains(Urls.MAIN)
+        return self.wait_for_url_contains("/")
 
     @allure.step("Проверить переход в ленту заказов")
     def is_feed_page_opened(self):

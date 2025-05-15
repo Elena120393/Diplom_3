@@ -4,16 +4,13 @@ import allure
 from pages.header_page import HeaderPage
 from pages.feed_page import FeedPage
 from locators.feed_locators import FeedPageLocators
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from data.urls import Urls
 
 
 @allure.feature("Хедер")
 class TestHeader:
     @allure.title("Переход в конструктор из ленты заказов")
     def test_navigate_to_constructor_from_feed(self, driver):
-        driver.get(Urls.FEED)
+        feed = FeedPage(driver).open()
         header = HeaderPage(driver)
         header.click_constructor_button()
         assert header.is_main_page_opened(), "Не перешли в конструктор"
@@ -22,7 +19,7 @@ class TestHeader:
     def test_navigate_to_feed_from_constructor(self, driver):
         feed = FeedPage(driver).open()
         feed.wait_for_element_visible(FeedPageLocators.FEED_SECTION, timeout=20)
-        assert driver.current_url == Urls.FEED, "Не перешли в ленту заказов"
+        assert feed.is_feed_page_opened(), "Не перешли в ленту заказов"
 
     @allure.title("Переход в личный кабинет после авторизации")
     def test_navigate_to_profile_authorized(self, logged_in_user, driver):

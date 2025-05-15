@@ -1,7 +1,5 @@
 
 
-
-
 import allure
 from pages.feed_page import FeedPage
 from pages.main_page import MainPage
@@ -10,8 +8,6 @@ from data.test_data import TestData
 from helpers.api_client import ApiClient
 from locators.feed_locators import FeedPageLocators
 from locators.main_page_locators import MainPageLocators
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 
@@ -116,25 +112,14 @@ class TestFeed:
 
     @allure.title('Проверка увеличения счетчика ингредиента при добавлении')
     def test_ingredient_counter_increases_after_adding(self, driver, logged_in_user):
-        """Счетчик увеличивается при добавлении булки в конструктор."""
         main_page = MainPage(driver)
         ingredient_name = "Флюоресцентная булка R2-D3"
-
         main_page.open()
 
-        # Добавляем булку через JS
         main_page.drag_bun_to_constructor(ingredient_name)
-
-        # Ожидаем появления в конструкторе
-        WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located(
-                MainPageLocators.constructor_element_with_name(ingredient_name)
-            ),
-            message="Булка не появилась в конструкторе"
-        )
-
-        # Локатор счетчика
-        counter_locator = MainPageLocators.ingredient_counter_by_name(ingredient_name)
+        assert main_page.wait_for_visibility(
+            MainPageLocators.constructor_element_with_name(ingredient_name)
+        ), "Булка не появилась в конструкторе"
 
 
 
